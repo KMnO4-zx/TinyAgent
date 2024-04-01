@@ -7,6 +7,7 @@ import requests
 - 首先要在 tools 中添加工具的描述信息
 - 然后在 tools 中添加工具的具体实现
 
+- https://serper.dev/dashboard
 """
 
 class Tools:
@@ -36,7 +37,7 @@ class Tools:
 
         payload = json.dumps({"q": search_query})
         headers = {
-            'X-API-KEY': 'f7bb026ef3524d0ace3a10034d5485fb9039c70a',
+            'X-API-KEY': '需要去申请一个serper key',
             'Content-Type': 'application/json'
         }
 
