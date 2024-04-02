@@ -64,7 +64,6 @@ class Agent:
     def text_completion(self, text, history=[]):
         text = "\nQuestion:" + text
         response, his = self.model.chat(text, history, self.system_prompt)
-        # print('第一次：', response)s
         plugin_name, plugin_args, response = self.parse_latest_plugin_call(response)
         if plugin_name:
             response += self.call_plugin(plugin_name, plugin_args)

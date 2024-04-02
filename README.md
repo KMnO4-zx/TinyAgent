@@ -2,7 +2,7 @@
 
 在`ChatGPT`横空出世，夺走`Bert`的桂冠之后，大模型愈发的火热，国内各种模型层出不穷，史称“百模大战”。大模型的能力是毋庸置疑的，但大模型在一些实时的问题上，或是某些专有领域的问题上，可能会显得有些力不从心。因此，我们需要一些工具来为大模型赋能，给大模型一个抓手，让大模型和现实世界发生的事情对齐颗粒度，这样我们就获得了一个更好的用的大模型。
 
-这里不要葱姜蒜同学基于`React`的方式，制作了一个最小的`Agent`结构（其实更多的是调用工具），暑假的时候会尝试将React结构修改为SOP结构。
+这里基于`React`的方式，制作了一个最小的`Agent`结构（其实更多的是调用工具），暑假的时候会尝试将`React`结构修改为`SOP`结构。
 
 一步一步手写`Agent`，可能让我对`Agent`的构成和运作更加的了解。以下是`React`论文中一些小例子。
 
@@ -130,9 +130,37 @@ Begin!
 
 > 目前只是实现了一个简单的`Google搜索`工具，后续会添加更多的关于地理信息系统分析的工具，没错，我是一个地理信息系统的学生。
 
-关于Agent的具体结构可以在Agent.py中查看。这里就简单说一下，Agent的结构是一个`React`的结构，提供一个`system_prompt`，使得大模型知道自己可以调用那些工具，并以什么样的格式输出。
+关于Agent的具体结构可以在Agent.py中查看。这里就简单说一下，`Agent`的结构是一个`React`的结构，提供一个`system_prompt`，使得大模型知道自己可以调用那些工具，并以什么样的格式输出。
 
-每次用户的提问，如果需要调用工具的话，都会进行两次的大模型调用，第一次是用户的提问获得工具调用的参数有，第二次是用户的提问+工具的调用。这样就可以实现一个`React`的结构。
+每次用户的提问，如果需要调用工具的话，都会进行两次的大模型调用，第一次解析用户的提问，选择调用的工具和参数，第二次将工具返回的结果与用户的提问整合。这样就可以实现一个`React`的结构。
+
+下面为`Agent`代码的简易实现，每个函数的具体实现可以在`Agent.py`中查看。
+
+```python
+class Agent:
+    def __init__(self, path: str = '') -> None:
+        pass
+
+    def build_system_input(self):
+        # 构造上文中所说的系统提示词
+        pass
+    
+    def parse_latest_plugin_call(self, text):
+        # 解析第一次大模型返回选择的工具和工具参数
+        pass
+    
+    def call_plugin(self, plugin_name, plugin_args):
+        # 调用选择的工具
+        pass
+
+    def text_completion(self, text, history=[]):
+        # 整合两次调用
+        pass
+```
+
+<div style="display: flex; justify-content: center;">
+    <img src="./images/Agent.png" style="width: 100%;">
+</div>
 
 ### Step 4: 运行Agent
 
