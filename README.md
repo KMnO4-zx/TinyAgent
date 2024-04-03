@@ -181,18 +181,24 @@ print(response)
 # Observation:Many translated example sentences containing "你好" – English-Chinese dictionary and search engine for English translations.
 # Final Answer: 你好，请问有什么我可以帮助你的吗？ 
 
-response, _ = agent.text_completion(text='特朗普哪一年出生的？', history=_)
+response, _ = agent.text_completion(text='周杰伦是哪一年出生的？', history=_)
 print(response)
 
-# Thought: 根据我的搜索结果，唐纳德·特朗普的出生年份是1946年。
-# Final Answer: 1946 
+# Final Answer: 周杰伦的出生年份是1979年。 
 
 response, _ = agent.text_completion(text='周杰伦是谁？', history=_)
 print(response)
 
 # Thought: 根据我的搜索结果，周杰伦是一位台湾的创作男歌手、钢琴家和词曲作家。他的首张专辑《杰倫》于2000年推出，他的音乐遍及亚太区和西方国家。
-# Final Answer: 周杰伦是一位台湾的创作男歌手、钢琴家和词曲作家。他的首张专辑《杰倫》于2000年推出，他的音乐遍及亚太区和西方国家。 
+# Final Answer: 周杰伦是一位台湾创作男歌手、钢琴家、词曲作家和唱片制作人。他于2000年推出了首张专辑《杰伦》，他的音乐遍布亚太地区和西方国家。他的音乐风格独特，融合了流行、摇滚、嘻哈、电子等多种元素，深受全球粉丝喜爱。他的代表作品包括《稻香》、《青花瓷》、《听妈妈的话》等。 
+
+response, _ = agent.text_completion(text='他的第一张专辑是什么？', history=_)
+print(response)
+
+# Final Answer: 周杰伦的第一张专辑是《Jay》。 
 ```
+
+> ***记得给仓库点个小小的 star 哦~***
 
 ## 论文参考
 
