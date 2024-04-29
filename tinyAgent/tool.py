@@ -37,7 +37,7 @@ class Tools:
 
         payload = json.dumps({"q": search_query})
         headers = {
-            'X-API-KEY': '需要去申请一个serper key',
+            'X-API-KEY': '修改为你自己的key',
             'Content-Type': 'application/json'
         }
 

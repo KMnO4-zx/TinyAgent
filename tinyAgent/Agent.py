@@ -1,8 +1,8 @@
 from typing import Dict, List, Optional, Tuple, Union
 import json5
 
-from LLM import InternLM2Chat
-from tool import Tools
+from tinyAgent.LLM import InternLM2Chat
+from tinyAgent.tool import Tools
 
 
 TOOL_DESC = """{name_for_model}: Call this tool to interact with the {name_for_human} API. What is the {name_for_human} API useful for? {description_for_model} Parameters: {parameters} Format the arguments as a JSON object."""
@@ -64,6 +64,7 @@ class Agent:
     def text_completion(self, text, history=[]):
         text = "\nQuestion:" + text
         response, his = self.model.chat(text, history, self.system_prompt)
+        print(response)
         plugin_name, plugin_args, response = self.parse_latest_plugin_call(response)
         if plugin_name:
             response += self.call_plugin(plugin_name, plugin_args)

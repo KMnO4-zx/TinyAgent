@@ -2,7 +2,7 @@
 
 在`ChatGPT`横空出世，夺走`Bert`的桂冠之后，大模型愈发的火热，国内各种模型层出不穷，史称“百模大战”。大模型的能力是毋庸置疑的，但大模型在一些实时的问题上，或是某些专有领域的问题上，可能会显得有些力不从心。因此，我们需要一些工具来为大模型赋能，给大模型一个抓手，让大模型和现实世界发生的事情对齐颗粒度，这样我们就获得了一个更好的用的大模型。
 
-这里基于`React`的方式，制作了一个最小的`Agent`结构（其实更多的是调用工具），暑假的时候会尝试将`React`结构修改为`SOP`结构。
+这里基于`React`的方式，我们手动制作了一个最小的`Agent`结构（其实更多的是调用工具），暑假的时候会尝试将`React`结构修改为`SOP`结构。
 
 一步一步手写`Agent`，可能让我对`Agent`的构成和运作更加的了解。以下是`React`论文中一些小例子。
 
@@ -16,9 +16,9 @@
 
 ### Step 1: 构造大模型
 
-我们需要一个大模型，这里我们使用`InternLM2`作为我们的大模型。`InternLM2`是一个基于`Decoder-Only`的对话大模型，我们可以使用`transformers`库来加载`InternLM2`。
+首先我们需要一个大模型，这里我们使用`InternLM2`作为我们的 Agent 模型。`InternLM2`是一个基于`Decoder-Only`的通用对话大模型，可以使用`transformers`库来加载`InternLM2`模型。
 
-首先，还是先创建一个`BaseModel`类，这个类是一个抽象类，我们可以在这个类中定义一些基本的方法，比如`chat`方法和`load_model`方法。方便以后扩展使用其他模型。
+首先，还是先创建一个`BaseModel`类，我们可以在这个类中定义一些基本的方法，比如`chat`方法和`load_model`方法，方便以后扩展使用其他模型。
 
 ```python
 class BaseModel:
@@ -53,12 +53,14 @@ class InternLM2Chat(BaseModel):
 
 ### Step 2: 构造工具
 
-我们在`tools.py`文件中，构造一些工具，比如`Google搜索`。我们在这个文件中，构造一个`Tools`类，这个类中包含了一些工具的描述信息和具体实现。我们可以在这个类中，添加一些工具的描述信息和具体实现。
+我们在`tools.py`文件中，构造一些工具，比如`Google搜索`。在这个文件中，构造一个`Tools`类。在这个类中，我们需要添加一些工具的描述信息和具体实现方式。
+
+添加工具的描述信息，是为了在构造`system_prompt`的时候，让模型能够知道可以调用哪些工具，以及工具的描述信息和参数。
 
 - 首先要在 `tools` 中添加工具的描述信息
 - 然后在 `tools` 中添加工具的具体实现
 
-> *使用Google搜索功能的话需要去`serper`官网申请一下`token`: https://serper.dev/dashboard*
+> *使用Google搜索功能的话需要去`serper`官网申请一下`token`: https://serper.dev/dashboard*， *然后在tools.py文件中填写你的key，这个key每人可以免费申请一个，且有2500次的免费调用额度，足够做实验用啦~*
 
 ```python
 class Tools:
@@ -89,7 +91,7 @@ class Tools:
 
 ### Step 3: 构造Agent
 
-我们在`Agent`类中，构造一个`Agent`，这个`Agent`是一个`React`的`Agent`，我们在这个`Agent`中，实现了`chat`方法，这个方法是一个对话方法，我们在这个方法中，调用`InternLM2`模型，然后根据`React`的`Agent`的逻辑，来调用`Tools`中的工具。
+我们在`Agent.py`文件中，构造一个`Agent`类，这个`Agent`是一个`React`范式的`Agent`，我们在这个`Agent`类中，实现了`text_completion`方法，这个方法是一个对话方法，我们在这个方法中，调用`InternLM2`模型，然后根据`React`的`Agent`的逻辑，来调用`Tools`中的工具。
 
 首先我们要构造`system_prompt`, 这个是系统的提示，我们可以在这个提示中，添加一些系统的提示信息，比如`ReAct`形式的`prompt`。
 
@@ -130,11 +132,11 @@ Begin!
 
 > 目前只是实现了一个简单的`Google搜索`工具，后续会添加更多的关于地理信息系统分析的工具，没错，我是一个地理信息系统的学生。
 
-关于Agent的具体结构可以在Agent.py中查看。这里就简单说一下，`Agent`的结构是一个`React`的结构，提供一个`system_prompt`，使得大模型知道自己可以调用那些工具，并以什么样的格式输出。
+关于Agent的具体结构可以在`tinyAgent/Agent.py`中查看。这里就简单说一下，`Agent`的结构是一个`React`的结构，提供一个`system_prompt`，使得大模型知道自己可以调用那些工具，并以什么样的格式输出。
 
 每次用户的提问，如果需要调用工具的话，都会进行两次的大模型调用，第一次解析用户的提问，选择调用的工具和参数，第二次将工具返回的结果与用户的提问整合。这样就可以实现一个`React`的结构。
 
-下面为`Agent`代码的简易实现，每个函数的具体实现可以在`Agent.py`中查看。
+下面为`Agent`代码的简易实现，每个函数的具体实现可以在`tinyAgent/Agent.py`中查看。
 
 ```python
 class Agent:
