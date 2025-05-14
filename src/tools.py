@@ -17,7 +17,7 @@ def add(a: float, b: float):
     :param b: 第二个浮点数。
     :return: 两个浮点数的和。
     """
-    return a + b
+    return str(a + b)
 
 def mul(a: float, b: float):
     """
@@ -26,7 +26,7 @@ def mul(a: float, b: float):
     :param b: 第二个浮点数。
     :return: 两个浮点数的积。
     """
-    return a * b
+    return str(a * b)
 
 def compare(a: float, b: float):
     """
