@@ -1,5 +1,5 @@
 from src.core import Agent
-from src.tools import add, count_letter_in_string, compare, get_current_datetime
+from src.tools import add, count_letter_in_string, compare, get_current_datetime, search_wikipedia
 
 from openai import OpenAI
 
@@ -12,8 +12,8 @@ if __name__ == "__main__":
 
     agent = Agent(
         client=client,
-        model="Qwen/Qwen2.5-32B-Instruct",
-        tools=[get_current_datetime, add, compare, count_letter_in_string],
+        model="Qwen/Qwen2.5-72B-Instruct",
+        tools=[get_current_datetime, add, compare, count_letter_in_string, search_wikipedia],
     )
 
     while True:
